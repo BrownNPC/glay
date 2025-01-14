@@ -12,45 +12,9 @@ const CLAY__MAXFLOAT = 3.4028234663852886e+38
 
 var CLAY__ELEMENT_DEFINITION_LATCH uint8
 
-type Clay__Alignpointer struct {
-	c int8
-	x unsafe.Pointer
-}
-type Clay__Alignbool struct {
-	c int8
-	x bool
-}
-type Clay__Alignuint8_t struct {
-	c int8
-	x uint8
-}
-type Clay__Alignint32_t struct {
-	c int8
-	x int32
-}
-type Clay_String struct {
-	length int32
-	chars  *byte
-}
-type Clay__AlignClay_String struct {
-	c int8
-	x Clay_String
-}
-type Clay__Clay_StringWrapper struct {
-	wrapped Clay_String
-}
-type Clay__StringArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_String
-}
-type Clay__AlignClay__StringArray struct {
-	c int8
-	x Clay__StringArray
-}
-type Clay__Clay__StringArrayWrapper struct {
-	wrapped Clay__StringArray
-}
+type Clay_String string
+type Clay__StringArray Arena[string]
+
 type Clay_Context struct {
 	maxElementCount                    int32
 	maxMeasureTextCacheWordCount       int32
@@ -111,87 +75,40 @@ type Clay_Arena struct {
 	capacity       uint64
 	memory         *byte
 }
-type Clay__AlignClay_Arena struct {
-	c int8
-	x Clay_Arena
-}
-type Clay__Clay_ArenaWrapper struct {
-	wrapped Clay_Arena
-}
+
 type Clay_Dimensions struct {
 	width  float32
 	height float32
 }
-type Clay__AlignClay_Dimensions struct {
-	c int8
-	x Clay_Dimensions
-}
-type Clay__Clay_DimensionsWrapper struct {
-	wrapped Clay_Dimensions
-}
+
 type Clay_Vector2 struct {
 	x float32
 	y float32
 }
-type Clay__AlignClay_Vector2 struct {
-	c int8
-	x Clay_Vector2
-}
-type Clay__Clay_Vector2Wrapper struct {
-	wrapped Clay_Vector2
-}
+
 type Clay_Color struct {
 	r float32
 	g float32
 	b float32
 	a float32
 }
-type Clay__AlignClay_Color struct {
-	c int8
-	x Clay_Color
-}
-type Clay__Clay_ColorWrapper struct {
-	wrapped Clay_Color
-}
+
 type Clay_BoundingBox struct {
 	x      float32
 	y      float32
 	width  float32
 	height float32
 }
-type Clay__AlignClay_BoundingBox struct {
-	c int8
-	x Clay_BoundingBox
-}
-type Clay__Clay_BoundingBoxWrapper struct {
-	wrapped Clay_BoundingBox
-}
-type Clay_ElementId struct {
-	id       uint32
-	offset   uint32
-	baseId   uint32
-	stringId Clay_String
-}
-type Clay__AlignClay_ElementId struct {
-	c int8
-	x Clay_ElementId
-}
-type Clay__Clay_ElementIdWrapper struct {
-	wrapped Clay_ElementId
-}
+
+type Clay_ElementId Clay_String
+
 type Clay_CornerRadius struct {
 	topLeft     float32
 	topRight    float32
 	bottomLeft  float32
 	bottomRight float32
 }
-type Clay__AlignClay_CornerRadius struct {
-	c int8
-	x Clay_CornerRadius
-}
-type Clay__Clay_CornerRadiusWrapper struct {
-	wrapped Clay_CornerRadius
-}
+
 type Clay__ElementConfigType int
 
 const (
@@ -205,13 +122,6 @@ const (
 	CLAY__ELEMENT_CONFIG_TYPE_CUSTOM             Clay__ElementConfigType = 64
 )
 
-type Clay__AlignClay__ElementConfigType struct {
-	c int8
-	x Clay__ElementConfigType
-}
-type Clay__Clay__ElementConfigTypeWrapper struct {
-	wrapped Clay__ElementConfigType
-}
 type Clay_LayoutDirection int
 
 const (
@@ -219,13 +129,6 @@ const (
 	CLAY_TOP_TO_BOTTOM
 )
 
-type Clay__AlignClay_LayoutDirection struct {
-	c int8
-	x Clay_LayoutDirection
-}
-type Clay__Clay_LayoutDirectionWrapper struct {
-	wrapped Clay_LayoutDirection
-}
 type Clay_LayoutAlignmentX int
 
 const (
@@ -234,13 +137,6 @@ const (
 	CLAY_ALIGN_X_CENTER
 )
 
-type Clay__AlignClay_LayoutAlignmentX struct {
-	c int8
-	x Clay_LayoutAlignmentX
-}
-type Clay__Clay_LayoutAlignmentXWrapper struct {
-	wrapped Clay_LayoutAlignmentX
-}
 type Clay_LayoutAlignmentY int
 
 const (
@@ -249,13 +145,6 @@ const (
 	CLAY_ALIGN_Y_CENTER
 )
 
-type Clay__AlignClay_LayoutAlignmentY struct {
-	c int8
-	x Clay_LayoutAlignmentY
-}
-type Clay__Clay_LayoutAlignmentYWrapper struct {
-	wrapped Clay_LayoutAlignmentY
-}
 type Clay__SizingType int
 
 const (
@@ -265,35 +154,16 @@ const (
 	CLAY__SIZING_TYPE_FIXED
 )
 
-type Clay__AlignClay__SizingType struct {
-	c int8
-	x Clay__SizingType
-}
-type Clay__Clay__SizingTypeWrapper struct {
-	wrapped Clay__SizingType
-}
 type Clay_ChildAlignment struct {
 	x Clay_LayoutAlignmentX
 	y Clay_LayoutAlignmentY
 }
-type Clay__AlignClay_ChildAlignment struct {
-	c int8
-	x Clay_ChildAlignment
-}
-type Clay__Clay_ChildAlignmentWrapper struct {
-	wrapped Clay_ChildAlignment
-}
+
 type Clay_SizingMinMax struct {
 	min float32
 	max float32
 }
-type Clay__AlignClay_SizingMinMax struct {
-	c int8
-	x Clay_SizingMinMax
-}
-type Clay__Clay_SizingMinMaxWrapper struct {
-	wrapped Clay_SizingMinMax
-}
+
 type Clay_SizingAxis struct {
 	size struct {
 		// union
@@ -302,37 +172,19 @@ type Clay_SizingAxis struct {
 	}
 	type_ Clay__SizingType
 }
-type Clay__AlignClay_SizingAxis struct {
-	c int8
-	x Clay_SizingAxis
-}
-type Clay__Clay_SizingAxisWrapper struct {
-	wrapped Clay_SizingAxis
-}
+
 type Clay_Sizing struct {
 	width  Clay_SizingAxis
 	height Clay_SizingAxis
 }
-type Clay__AlignClay_Sizing struct {
-	c int8
-	x Clay_Sizing
-}
-type Clay__Clay_SizingWrapper struct {
-	wrapped Clay_Sizing
-}
+
 type Clay_Padding struct {
 	left   uint16
 	right  uint16
 	top    uint16
 	bottom uint16
 }
-type Clay__AlignClay_Padding struct {
-	c int8
-	x Clay_Padding
-}
-type Clay__Clay_PaddingWrapper struct {
-	wrapped Clay_Padding
-}
+
 type Clay_LayoutConfig struct {
 	sizing          Clay_Sizing
 	padding         Clay_Padding
@@ -340,24 +192,12 @@ type Clay_LayoutConfig struct {
 	childAlignment  Clay_ChildAlignment
 	layoutDirection Clay_LayoutDirection
 }
-type Clay__AlignClay_LayoutConfig struct {
-	c int8
-	x Clay_LayoutConfig
-}
-type Clay__Clay_LayoutConfigWrapper struct {
-	wrapped Clay_LayoutConfig
-}
+
 type Clay_RectangleElementConfig struct {
 	color        Clay_Color
 	cornerRadius Clay_CornerRadius
 }
-type Clay__AlignClay_RectangleElementConfig struct {
-	c int8
-	x Clay_RectangleElementConfig
-}
-type Clay__Clay_RectangleElementConfigWrapper struct {
-	wrapped Clay_RectangleElementConfig
-}
+
 type Clay_TextElementConfigWrapMode int
 
 const (
@@ -366,13 +206,6 @@ const (
 	CLAY_TEXT_WRAP_NONE
 )
 
-type Clay__AlignClay_TextElementConfigWrapMode struct {
-	c int8
-	x Clay_TextElementConfigWrapMode
-}
-type Clay__Clay_TextElementConfigWrapModeWrapper struct {
-	wrapped Clay_TextElementConfigWrapMode
-}
 type Clay_TextElementConfig struct {
 	textColor     Clay_Color
 	fontId        uint16
@@ -381,24 +214,12 @@ type Clay_TextElementConfig struct {
 	lineHeight    uint16
 	wrapMode      Clay_TextElementConfigWrapMode
 }
-type Clay__AlignClay_TextElementConfig struct {
-	c int8
-	x Clay_TextElementConfig
-}
-type Clay__Clay_TextElementConfigWrapper struct {
-	wrapped Clay_TextElementConfig
-}
+
 type Clay_ImageElementConfig struct {
 	imageData        unsafe.Pointer
 	sourceDimensions Clay_Dimensions
 }
-type Clay__AlignClay_ImageElementConfig struct {
-	c int8
-	x Clay_ImageElementConfig
-}
-type Clay__Clay_ImageElementConfigWrapper struct {
-	wrapped Clay_ImageElementConfig
-}
+
 type Clay_FloatingAttachPointType int
 
 const (
@@ -413,24 +234,11 @@ const (
 	CLAY_ATTACH_POINT_RIGHT_BOTTOM
 )
 
-type Clay__AlignClay_FloatingAttachPointType struct {
-	c int8
-	x Clay_FloatingAttachPointType
-}
-type Clay__Clay_FloatingAttachPointTypeWrapper struct {
-	wrapped Clay_FloatingAttachPointType
-}
 type Clay_FloatingAttachPoints struct {
 	element Clay_FloatingAttachPointType
 	parent  Clay_FloatingAttachPointType
 }
-type Clay__AlignClay_FloatingAttachPoints struct {
-	c int8
-	x Clay_FloatingAttachPoints
-}
-type Clay__Clay_FloatingAttachPointsWrapper struct {
-	wrapped Clay_FloatingAttachPoints
-}
+
 type Clay_PointerCaptureMode int
 
 const (
@@ -438,13 +246,6 @@ const (
 	CLAY_POINTER_CAPTURE_MODE_PASSTHROUGH
 )
 
-type Clay__AlignClay_PointerCaptureMode struct {
-	c int8
-	x Clay_PointerCaptureMode
-}
-type Clay__Clay_PointerCaptureModeWrapper struct {
-	wrapped Clay_PointerCaptureMode
-}
 type Clay_FloatingElementConfig struct {
 	offset             Clay_Vector2
 	expand             Clay_Dimensions
@@ -453,45 +254,21 @@ type Clay_FloatingElementConfig struct {
 	attachment         Clay_FloatingAttachPoints
 	pointerCaptureMode Clay_PointerCaptureMode
 }
-type Clay__AlignClay_FloatingElementConfig struct {
-	c int8
-	x Clay_FloatingElementConfig
-}
-type Clay__Clay_FloatingElementConfigWrapper struct {
-	wrapped Clay_FloatingElementConfig
-}
+
 type Clay_CustomElementConfig struct {
 	customData unsafe.Pointer
 }
-type Clay__AlignClay_CustomElementConfig struct {
-	c int8
-	x Clay_CustomElementConfig
-}
-type Clay__Clay_CustomElementConfigWrapper struct {
-	wrapped Clay_CustomElementConfig
-}
+
 type Clay_ScrollElementConfig struct {
 	horizontal bool
 	vertical   bool
 }
-type Clay__AlignClay_ScrollElementConfig struct {
-	c int8
-	x Clay_ScrollElementConfig
-}
-type Clay__Clay_ScrollElementConfigWrapper struct {
-	wrapped Clay_ScrollElementConfig
-}
+
 type Clay_Border struct {
 	width uint32
 	color Clay_Color
 }
-type Clay__AlignClay_Border struct {
-	c int8
-	x Clay_Border
-}
-type Clay__Clay_BorderWrapper struct {
-	wrapped Clay_Border
-}
+
 type Clay_BorderElementConfig struct {
 	left            Clay_Border
 	right           Clay_Border
@@ -500,13 +277,7 @@ type Clay_BorderElementConfig struct {
 	betweenChildren Clay_Border
 	cornerRadius    Clay_CornerRadius
 }
-type Clay__AlignClay_BorderElementConfig struct {
-	c int8
-	x Clay_BorderElementConfig
-}
-type Clay__Clay_BorderElementConfigWrapper struct {
-	wrapped Clay_BorderElementConfig
-}
+
 type Clay_ElementConfigUnion struct {
 	// union
 	rectangleElementConfig *Clay_RectangleElementConfig
@@ -517,24 +288,12 @@ type Clay_ElementConfigUnion struct {
 	scrollElementConfig    *Clay_ScrollElementConfig
 	borderElementConfig    *Clay_BorderElementConfig
 }
-type Clay__AlignClay_ElementConfigUnion struct {
-	c int8
-	x Clay_ElementConfigUnion
-}
-type Clay__Clay_ElementConfigUnionWrapper struct {
-	wrapped Clay_ElementConfigUnion
-}
+
 type Clay_ElementConfig struct {
 	type_  Clay__ElementConfigType
 	config Clay_ElementConfigUnion
 }
-type Clay__AlignClay_ElementConfig struct {
-	c int8
-	x Clay_ElementConfig
-}
-type Clay__Clay_ElementConfigWrapper struct {
-	wrapped Clay_ElementConfig
-}
+
 type Clay_ScrollContainerData struct {
 	scrollPosition            *Clay_Vector2
 	scrollContainerDimensions Clay_Dimensions
@@ -542,13 +301,7 @@ type Clay_ScrollContainerData struct {
 	config                    Clay_ScrollElementConfig
 	found                     bool
 }
-type Clay__AlignClay_ScrollContainerData struct {
-	c int8
-	x Clay_ScrollContainerData
-}
-type Clay__Clay_ScrollContainerDataWrapper struct {
-	wrapped Clay_ScrollContainerData
-}
+
 type Clay_RenderCommandType int
 
 const (
@@ -562,13 +315,6 @@ const (
 	CLAY_RENDER_COMMAND_TYPE_CUSTOM
 )
 
-type Clay__AlignClay_RenderCommandType struct {
-	c int8
-	x Clay_RenderCommandType
-}
-type Clay__Clay_RenderCommandTypeWrapper struct {
-	wrapped Clay_RenderCommandType
-}
 type Clay_RenderCommand struct {
 	boundingBox Clay_BoundingBox
 	config      Clay_ElementConfigUnion
@@ -576,25 +322,9 @@ type Clay_RenderCommand struct {
 	id          uint32
 	commandType Clay_RenderCommandType
 }
-type Clay__AlignClay_RenderCommand struct {
-	c int8
-	x Clay_RenderCommand
-}
-type Clay__Clay_RenderCommandWrapper struct {
-	wrapped Clay_RenderCommand
-}
-type Clay_RenderCommandArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_RenderCommand
-}
-type Clay__AlignClay_RenderCommandArray struct {
-	c int8
-	x Clay_RenderCommandArray
-}
-type Clay__Clay_RenderCommandArrayWrapper struct {
-	wrapped Clay_RenderCommandArray
-}
+
+type Clay_RenderCommandArray *Clay_RenderCommand
+
 type Clay_PointerDataInteractionState int
 
 const (
@@ -604,24 +334,11 @@ const (
 	CLAY_POINTER_DATA_RELEASED
 )
 
-type Clay__AlignClay_PointerDataInteractionState struct {
-	c int8
-	x Clay_PointerDataInteractionState
-}
-type Clay__Clay_PointerDataInteractionStateWrapper struct {
-	wrapped Clay_PointerDataInteractionState
-}
 type Clay_PointerData struct {
 	position Clay_Vector2
 	state    Clay_PointerDataInteractionState
 }
-type Clay__AlignClay_PointerData struct {
-	c int8
-	x Clay_PointerData
-}
-type Clay__Clay_PointerDataWrapper struct {
-	wrapped Clay_PointerData
-}
+
 type Clay_ErrorType int
 
 const (
@@ -634,35 +351,15 @@ const (
 	CLAY_ERROR_TYPE_INTERNAL_ERROR
 )
 
-type Clay__AlignClay_ErrorType struct {
-	c int8
-	x Clay_ErrorType
-}
-type Clay__Clay_ErrorTypeWrapper struct {
-	wrapped Clay_ErrorType
-}
 type Clay_ErrorData struct {
 	errorType Clay_ErrorType
 	errorText Clay_String
 	userData  uint64
 }
-type Clay__AlignClay_ErrorData struct {
-	c int8
-	x Clay_ErrorData
-}
-type Clay__Clay_ErrorDataWrapper struct {
-	wrapped Clay_ErrorData
-}
+
 type Clay_ErrorHandler struct {
 	errorHandlerFunction func(errorText Clay_ErrorData)
 	userData             uint64
-}
-type Clay__AlignClay_ErrorHandler struct {
-	c int8
-	x Clay_ErrorHandler
-}
-type Clay__Clay_ErrorHandlerWrapper struct {
-	wrapped Clay_ErrorHandler
 }
 
 var Clay__currentContext *Clay_Context
@@ -673,81 +370,36 @@ func Clay__ErrorHandlerFunctionDefault(errorText Clay_ErrorData) {
 	_ = errorText
 }
 
-var CLAY__SPACECHAR Clay_String = Clay_String{length: 1, chars: libc.CString(" ")}
-var CLAY__STRING_DEFAULT Clay_String = Clay_String{}
+var CLAY__SPACECHAR Clay_String = Clay_String(" ")
+var CLAY__STRING_DEFAULT Clay_String
 
 type Clay_BooleanWarnings struct {
 	maxElementsExceeded         bool
 	maxRenderCommandsExceeded   bool
 	maxTextMeasureCacheExceeded bool
 }
-type Clay__AlignClay_BooleanWarnings struct {
-	c int8
-	x Clay_BooleanWarnings
-}
-type Clay__Clay_BooleanWarningsWrapper struct {
-	wrapped Clay_BooleanWarnings
-}
+
 type Clay__Warning struct {
 	baseMessage    Clay_String
 	dynamicMessage Clay_String
 }
-type Clay__AlignClay__Warning struct {
-	c int8
-	x Clay__Warning
-}
-type Clay__Clay__WarningWrapper struct {
-	wrapped Clay__Warning
-}
 
-var CLAY__WARNING_DEFAULT Clay__Warning = Clay__Warning{}
+var CLAY__WARNING_DEFAULT Clay__Warning
 
-type Clay__WarningArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__Warning
-}
-type Clay__AlignClay__WarningArray struct {
-	c int8
-	x Clay__WarningArray
-}
-type Clay__Clay__WarningArrayWrapper struct {
-	wrapped Clay__WarningArray
-}
-type Clay__BoolArray struct {
-	capacity      int32
-	length        int32
-	internalArray *bool
-}
-type Clay__AlignClay__BoolArray struct {
-	c int8
-	x Clay__BoolArray
-}
-type Clay__Clay__BoolArrayWrapper struct {
-	wrapped Clay__BoolArray
-}
+type Clay__WarningArray *Clay__Warning
+
+type Clay__BoolArray Arena[bool]
 
 func Clay__BoolArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__BoolArray {
-	return Clay__BoolArray{capacity: capacity, length: 0, internalArray: (*bool)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(bool(false))), uint32(int32(_cxgo_offsetof(Clay__Alignbool{}, "#member"))), arena))}
+	return Clay__BoolArray(NewArena[bool](capacity))
 }
 
-var CLAY__ELEMENT_ID_DEFAULT Clay_ElementId = Clay_ElementId{}
+var CLAY__ELEMENT_ID_DEFAULT Clay_ElementId
 
-type Clay__ElementIdArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_ElementId
-}
-type Clay__AlignClay__ElementIdArray struct {
-	c int8
-	x Clay__ElementIdArray
-}
-type Clay__Clay__ElementIdArrayWrapper struct {
-	wrapped Clay__ElementIdArray
-}
+type Clay__ElementIdArray Arena[Clay_ElementId]
 
 func Clay__ElementIdArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ElementIdArray {
-	return Clay__ElementIdArray{capacity: capacity, length: 0, internalArray: (*Clay_ElementId)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ElementId{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_ElementId{}, "#member"))), arena))}
+	return Clay__ElementIdArray{}
 }
 func Clay__ElementIdArray_Get(array *Clay__ElementIdArray, index int32) *Clay_ElementId {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -770,32 +422,15 @@ func Clay__ElementIdArray_Add(array *Clay__ElementIdArray, item Clay_ElementId) 
 
 var CLAY__ELEMENT_CONFIG_DEFAULT Clay_ElementConfig = Clay_ElementConfig{type_: CLAY__ELEMENT_CONFIG_TYPE_NONE, config: Clay_ElementConfigUnion{}}
 
-type Clay__ElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_ElementConfig
-}
-type Clay__AlignClay__ElementConfigArray struct {
-	c int8
-	x Clay__ElementConfigArray
-}
-type Clay__Clay__ElementConfigArrayWrapper struct {
-	wrapped Clay__ElementConfigArray
-}
+type Clay__ElementConfigArray *Clay_ElementConfig
+
 type Clay__ElementConfigArraySlice struct {
 	length        int32
 	internalArray *Clay_ElementConfig
 }
-type Clay__AlignClay__ElementConfigArraySlice struct {
-	c int8
-	x Clay__ElementConfigArraySlice
-}
-type Clay__Clay__ElementConfigArraySliceWrapper struct {
-	wrapped Clay__ElementConfigArraySlice
-}
 
 func Clay__ElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ElementConfigArray {
-	return Clay__ElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_ElementConfig{}, "#member"))), arena))}
+	return Clay__ElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__ElementConfigArray_Get(array *Clay__ElementConfigArray, index int32) *Clay_ElementConfig {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -832,21 +467,10 @@ var CLAY_LAYOUT_DEFAULT Clay_LayoutConfig = Clay_LayoutConfig{sizing: Clay_Sizin
 	percent float32
 }{minMax: Clay_SizingMinMax{min: 0, max: CLAY__MAXFLOAT}}, type_: CLAY__SIZING_TYPE_FIT}}}
 
-type Clay__LayoutConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_LayoutConfig
-}
-type Clay__AlignClay__LayoutConfigArray struct {
-	c int8
-	x Clay__LayoutConfigArray
-}
-type Clay__Clay__LayoutConfigArrayWrapper struct {
-	wrapped Clay__LayoutConfigArray
-}
+type Clay__LayoutConfigArray *Clay_LayoutConfig
 
 func Clay__LayoutConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutConfigArray {
-	return Clay__LayoutConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_LayoutConfig{}, "#member"))), arena))}
+	return Clay__LayoutConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__LayoutConfigArray_Add(array *Clay__LayoutConfigArray, item Clay_LayoutConfig) *Clay_LayoutConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -863,21 +487,10 @@ func Clay__LayoutConfigArray_Add(array *Clay__LayoutConfigArray, item Clay_Layou
 
 var CLAY__RECTANGLE_ELEMENT_CONFIG_DEFAULT Clay_RectangleElementConfig = Clay_RectangleElementConfig{}
 
-type Clay__RectangleElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_RectangleElementConfig
-}
-type Clay__AlignClay__RectangleElementConfigArray struct {
-	c int8
-	x Clay__RectangleElementConfigArray
-}
-type Clay__Clay__RectangleElementConfigArrayWrapper struct {
-	wrapped Clay__RectangleElementConfigArray
-}
+type Clay__RectangleElementConfigArray *Clay_RectangleElementConfig
 
 func Clay__RectangleElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__RectangleElementConfigArray {
-	return Clay__RectangleElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_RectangleElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_RectangleElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_RectangleElementConfig{}, "#member"))), arena))}
+	return Clay__RectangleElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_RectangleElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_RectangleElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__RectangleElementConfigArray_Add(array *Clay__RectangleElementConfigArray, item Clay_RectangleElementConfig) *Clay_RectangleElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -894,21 +507,10 @@ func Clay__RectangleElementConfigArray_Add(array *Clay__RectangleElementConfigAr
 
 var CLAY__TEXT_ELEMENT_CONFIG_DEFAULT Clay_TextElementConfig = Clay_TextElementConfig{}
 
-type Clay__TextElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_TextElementConfig
-}
-type Clay__AlignClay__TextElementConfigArray struct {
-	c int8
-	x Clay__TextElementConfigArray
-}
-type Clay__Clay__TextElementConfigArrayWrapper struct {
-	wrapped Clay__TextElementConfigArray
-}
+type Clay__TextElementConfigArray *Clay_TextElementConfig
 
 func Clay__TextElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__TextElementConfigArray {
-	return Clay__TextElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_TextElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_TextElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_TextElementConfig{}, "#member"))), arena))}
+	return Clay__TextElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_TextElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_TextElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__TextElementConfigArray_Add(array *Clay__TextElementConfigArray, item Clay_TextElementConfig) *Clay_TextElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -925,21 +527,10 @@ func Clay__TextElementConfigArray_Add(array *Clay__TextElementConfigArray, item 
 
 var CLAY__IMAGE_ELEMENT_CONFIG_DEFAULT Clay_ImageElementConfig = Clay_ImageElementConfig{}
 
-type Clay__ImageElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_ImageElementConfig
-}
-type Clay__AlignClay__ImageElementConfigArray struct {
-	c int8
-	x Clay__ImageElementConfigArray
-}
-type Clay__Clay__ImageElementConfigArrayWrapper struct {
-	wrapped Clay__ImageElementConfigArray
-}
+type Clay__ImageElementConfigArray *Clay_ImageElementConfig
 
 func Clay__ImageElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ImageElementConfigArray {
-	return Clay__ImageElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ImageElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ImageElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_ImageElementConfig{}, "#member"))), arena))}
+	return Clay__ImageElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ImageElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ImageElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__ImageElementConfigArray_Add(array *Clay__ImageElementConfigArray, item Clay_ImageElementConfig) *Clay_ImageElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -956,21 +547,10 @@ func Clay__ImageElementConfigArray_Add(array *Clay__ImageElementConfigArray, ite
 
 var CLAY__FLOATING_ELEMENT_CONFIG_DEFAULT Clay_FloatingElementConfig = Clay_FloatingElementConfig{}
 
-type Clay__FloatingElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_FloatingElementConfig
-}
-type Clay__AlignClay__FloatingElementConfigArray struct {
-	c int8
-	x Clay__FloatingElementConfigArray
-}
-type Clay__Clay__FloatingElementConfigArrayWrapper struct {
-	wrapped Clay__FloatingElementConfigArray
-}
+type Clay__FloatingElementConfigArray *Clay_FloatingElementConfig
 
 func Clay__FloatingElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__FloatingElementConfigArray {
-	return Clay__FloatingElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_FloatingElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_FloatingElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_FloatingElementConfig{}, "#member"))), arena))}
+	return Clay__FloatingElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_FloatingElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_FloatingElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__FloatingElementConfigArray_Add(array *Clay__FloatingElementConfigArray, item Clay_FloatingElementConfig) *Clay_FloatingElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -987,21 +567,10 @@ func Clay__FloatingElementConfigArray_Add(array *Clay__FloatingElementConfigArra
 
 var CLAY__CUSTOM_ELEMENT_CONFIG_DEFAULT Clay_CustomElementConfig = Clay_CustomElementConfig{}
 
-type Clay__CustomElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_CustomElementConfig
-}
-type Clay__AlignClay__CustomElementConfigArray struct {
-	c int8
-	x Clay__CustomElementConfigArray
-}
-type Clay__Clay__CustomElementConfigArrayWrapper struct {
-	wrapped Clay__CustomElementConfigArray
-}
+type Clay__CustomElementConfigArray *Clay_CustomElementConfig
 
 func Clay__CustomElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__CustomElementConfigArray {
-	return Clay__CustomElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_CustomElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_CustomElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_CustomElementConfig{}, "#member"))), arena))}
+	return Clay__CustomElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_CustomElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_CustomElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__CustomElementConfigArray_Add(array *Clay__CustomElementConfigArray, item Clay_CustomElementConfig) *Clay_CustomElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1018,21 +587,10 @@ func Clay__CustomElementConfigArray_Add(array *Clay__CustomElementConfigArray, i
 
 var CLAY__SCROLL_ELEMENT_CONFIG_DEFAULT Clay_ScrollElementConfig = Clay_ScrollElementConfig{horizontal: false}
 
-type Clay__ScrollElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_ScrollElementConfig
-}
-type Clay__AlignClay__ScrollElementConfigArray struct {
-	c int8
-	x Clay__ScrollElementConfigArray
-}
-type Clay__Clay__ScrollElementConfigArrayWrapper struct {
-	wrapped Clay__ScrollElementConfigArray
-}
+type Clay__ScrollElementConfigArray *Clay_ScrollElementConfig
 
 func Clay__ScrollElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ScrollElementConfigArray {
-	return Clay__ScrollElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ScrollElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ScrollElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_ScrollElementConfig{}, "#member"))), arena))}
+	return Clay__ScrollElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ScrollElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ScrollElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__ScrollElementConfigArray_Add(array *Clay__ScrollElementConfigArray, item Clay_ScrollElementConfig) *Clay_ScrollElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1047,20 +605,10 @@ func Clay__ScrollElementConfigArray_Add(array *Clay__ScrollElementConfigArray, i
 	return &CLAY__SCROLL_ELEMENT_CONFIG_DEFAULT
 }
 
-type Clay__StringArraySlice struct {
-	length        int32
-	internalArray *Clay_String
-}
-type Clay__AlignClay__StringArraySlice struct {
-	c int8
-	x Clay__StringArraySlice
-}
-type Clay__Clay__StringArraySliceWrapper struct {
-	wrapped Clay__StringArraySlice
-}
+type Clay__StringArraySlice Arena[*Clay_String]
 
 func Clay__StringArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__StringArray {
-	return Clay__StringArray{capacity: capacity, length: 0, internalArray: (*Clay_String)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_String{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_String{}, "#member"))), arena))}
+	return Clay__StringArray{capacity: capacity, length: 0, internalArray: (*Clay_String)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_String{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__StringArray_Add(array *Clay__StringArray, item Clay_String) *Clay_String {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1079,42 +627,15 @@ type Clay__WrappedTextLine struct {
 	dimensions Clay_Dimensions
 	line       Clay_String
 }
-type Clay__AlignClay__WrappedTextLine struct {
-	c int8
-	x Clay__WrappedTextLine
-}
-type Clay__Clay__WrappedTextLineWrapper struct {
-	wrapped Clay__WrappedTextLine
-}
 
 var CLAY__WRAPPED_TEXT_LINE_DEFAULT Clay__WrappedTextLine = Clay__WrappedTextLine{}
 
-type Clay__WrappedTextLineArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__WrappedTextLine
-}
-type Clay__AlignClay__WrappedTextLineArray struct {
-	c int8
-	x Clay__WrappedTextLineArray
-}
-type Clay__Clay__WrappedTextLineArrayWrapper struct {
-	wrapped Clay__WrappedTextLineArray
-}
-type Clay__WrappedTextLineArraySlice struct {
-	length        int32
-	internalArray *Clay__WrappedTextLine
-}
-type Clay__AlignClay__WrappedTextLineArraySlice struct {
-	c int8
-	x Clay__WrappedTextLineArraySlice
-}
-type Clay__Clay__WrappedTextLineArraySliceWrapper struct {
-	wrapped Clay__WrappedTextLineArraySlice
-}
+type Clay__WrappedTextLineArray *Clay__WrappedTextLine
+
+type Clay__WrappedTextLineArraySlice Arena[*Clay__WrappedTextLine]
 
 func Clay__WrappedTextLineArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__WrappedTextLineArray {
-	return Clay__WrappedTextLineArray{capacity: capacity, length: 0, internalArray: (*Clay__WrappedTextLine)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__WrappedTextLine{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__WrappedTextLine{}, "#member"))), arena))}
+	return Clay__WrappedTextLineArray{capacity: capacity, length: 0, internalArray: (*Clay__WrappedTextLine)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__WrappedTextLine{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__WrappedTextLineArray_Add(array *Clay__WrappedTextLineArray, item Clay__WrappedTextLine) *Clay__WrappedTextLine {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1141,31 +662,13 @@ type Clay__TextElementData struct {
 	elementIndex        int32
 	wrappedLines        Clay__WrappedTextLineArraySlice
 }
-type Clay__AlignClay__TextElementData struct {
-	c int8
-	x Clay__TextElementData
-}
-type Clay__Clay__TextElementDataWrapper struct {
-	wrapped Clay__TextElementData
-}
 
 var CLAY__TEXT_ELEMENT_DATA_DEFAULT Clay__TextElementData = Clay__TextElementData{}
 
-type Clay__TextElementDataArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__TextElementData
-}
-type Clay__AlignClay__TextElementDataArray struct {
-	c int8
-	x Clay__TextElementDataArray
-}
-type Clay__Clay__TextElementDataArrayWrapper struct {
-	wrapped Clay__TextElementDataArray
-}
+type Clay__TextElementDataArray *Clay__TextElementData
 
 func Clay__TextElementDataArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__TextElementDataArray {
-	return Clay__TextElementDataArray{capacity: capacity, length: 0, internalArray: (*Clay__TextElementData)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__TextElementData{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__TextElementData{}, "#member"))), arena))}
+	return Clay__TextElementDataArray{capacity: capacity, length: 0, internalArray: (*Clay__TextElementData)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__TextElementData{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__TextElementDataArray_Get(array *Clay__TextElementDataArray, index int32) *Clay__TextElementData {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -1188,21 +691,10 @@ func Clay__TextElementDataArray_Add(array *Clay__TextElementDataArray, item Clay
 
 var CLAY__BORDER_ELEMENT_CONFIG_DEFAULT Clay_BorderElementConfig = Clay_BorderElementConfig{}
 
-type Clay__BorderElementConfigArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_BorderElementConfig
-}
-type Clay__AlignClay__BorderElementConfigArray struct {
-	c int8
-	x Clay__BorderElementConfigArray
-}
-type Clay__Clay__BorderElementConfigArrayWrapper struct {
-	wrapped Clay__BorderElementConfigArray
-}
+type Clay__BorderElementConfigArray *Clay_BorderElementConfig
 
 func Clay__BorderElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__BorderElementConfigArray {
-	return Clay__BorderElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_BorderElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_BorderElementConfig{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_BorderElementConfig{}, "#member"))), arena))}
+	return Clay__BorderElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_BorderElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_BorderElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__BorderElementConfigArray_Add(array *Clay__BorderElementConfigArray, item Clay_BorderElementConfig) *Clay_BorderElementConfig {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1221,13 +713,7 @@ type Clay__LayoutElementChildren struct {
 	elements *int32
 	length   uint16
 }
-type Clay__AlignClay__LayoutElementChildren struct {
-	c int8
-	x Clay__LayoutElementChildren
-}
-type Clay__Clay__LayoutElementChildrenWrapper struct {
-	wrapped Clay__LayoutElementChildren
-}
+
 type Clay_LayoutElement struct {
 	childrenOrTextContent struct {
 		// union
@@ -1241,31 +727,13 @@ type Clay_LayoutElement struct {
 	configsEnabled uint32
 	id             uint32
 }
-type Clay__AlignClay_LayoutElement struct {
-	c int8
-	x Clay_LayoutElement
-}
-type Clay__Clay_LayoutElementWrapper struct {
-	wrapped Clay_LayoutElement
-}
 
 var CLAY__LAYOUT_ELEMENT_DEFAULT Clay_LayoutElement = Clay_LayoutElement{}
 
-type Clay_LayoutElementArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_LayoutElement
-}
-type Clay__AlignClay_LayoutElementArray struct {
-	c int8
-	x Clay_LayoutElementArray
-}
-type Clay__Clay_LayoutElementArrayWrapper struct {
-	wrapped Clay_LayoutElementArray
-}
+type Clay_LayoutElementArray Arena[*Clay_LayoutElement]
 
 func Clay_LayoutElementArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay_LayoutElementArray {
-	return Clay_LayoutElementArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutElement)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutElement{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_LayoutElement{}, "#member"))), arena))}
+	return Clay_LayoutElementArray(NewArena[*Clay_LayoutElement](capacity))
 }
 func Clay_LayoutElementArray_Add(array *Clay_LayoutElementArray, item Clay_LayoutElement) *Clay_LayoutElement {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1286,18 +754,7 @@ func Clay_LayoutElementArray_Get(array *Clay_LayoutElementArray, index int32) *C
 	return &CLAY__LAYOUT_ELEMENT_DEFAULT
 }
 
-type Clay__LayoutElementPointerArray struct {
-	capacity      int32
-	length        int32
-	internalArray **Clay_LayoutElement
-}
-type Clay__AlignClay__LayoutElementPointerArray struct {
-	c int8
-	x Clay__LayoutElementPointerArray
-}
-type Clay__Clay__LayoutElementPointerArrayWrapper struct {
-	wrapped Clay__LayoutElementPointerArray
-}
+type Clay__LayoutElementPointerArray Arena[*Clay_LayoutElement]
 
 func Clay__LayoutElementPointerArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementPointerArray {
 	return Clay__LayoutElementPointerArray{capacity: capacity, length: 0, internalArray: (**Clay_LayoutElement)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof((*Clay_LayoutElement)(nil))), uint32(int32(_cxgo_offsetof(Clay__Alignpointer{}, "#member"))), arena))}
@@ -1333,7 +790,7 @@ func Clay__LayoutElementPointerArray_RemoveSwapback(array *Clay__LayoutElementPo
 var CLAY__RENDER_COMMAND_DEFAULT Clay_RenderCommand = Clay_RenderCommand{}
 
 func Clay_RenderCommandArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay_RenderCommandArray {
-	return Clay_RenderCommandArray{capacity: capacity, length: 0, internalArray: (*Clay_RenderCommand)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_RenderCommand{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_RenderCommand{}, "#member"))), arena))}
+	return Clay_RenderCommandArray{capacity: capacity, length: 0, internalArray: (*Clay_RenderCommand)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_RenderCommand{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay_RenderCommandArray_Add(array *Clay_RenderCommandArray, item Clay_RenderCommand) *Clay_RenderCommand {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1368,31 +825,13 @@ type Clay__ScrollContainerDataInternal struct {
 	openThisFrame       bool
 	pointerScrollActive bool
 }
-type Clay__AlignClay__ScrollContainerDataInternal struct {
-	c int8
-	x Clay__ScrollContainerDataInternal
-}
-type Clay__Clay__ScrollContainerDataInternalWrapper struct {
-	wrapped Clay__ScrollContainerDataInternal
-}
 
 var CLAY__SCROLL_CONTAINER_DEFAULT Clay__ScrollContainerDataInternal = Clay__ScrollContainerDataInternal{}
 
-type Clay__ScrollContainerDataInternalArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__ScrollContainerDataInternal
-}
-type Clay__AlignClay__ScrollContainerDataInternalArray struct {
-	c int8
-	x Clay__ScrollContainerDataInternalArray
-}
-type Clay__Clay__ScrollContainerDataInternalArrayWrapper struct {
-	wrapped Clay__ScrollContainerDataInternalArray
-}
+type Clay__ScrollContainerDataInternalArray Arena[*Clay__ScrollContainerDataInternal]
 
 func Clay__ScrollContainerDataInternalArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ScrollContainerDataInternalArray {
-	return Clay__ScrollContainerDataInternalArray{capacity: capacity, length: 0, internalArray: (*Clay__ScrollContainerDataInternal)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__ScrollContainerDataInternal{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__ScrollContainerDataInternal{}, "#member"))), arena))}
+	return Clay__ScrollContainerDataInternalArray{capacity: capacity, length: 0, internalArray: (*Clay__ScrollContainerDataInternal)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__ScrollContainerDataInternal{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__ScrollContainerDataInternalArray_Add(array *Clay__ScrollContainerDataInternalArray, item Clay__ScrollContainerDataInternal) *Clay__ScrollContainerDataInternal {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1426,31 +865,13 @@ type Clay__DebugElementData struct {
 	collision bool
 	collapsed bool
 }
-type Clay__AlignClay__DebugElementData struct {
-	c int8
-	x Clay__DebugElementData
-}
-type Clay__Clay__DebugElementDataWrapper struct {
-	wrapped Clay__DebugElementData
-}
 
 var CLAY__DEBUG_ELEMENT_DATA_DEFAULT Clay__DebugElementData = Clay__DebugElementData{collision: false}
 
-type Clay__DebugElementDataArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__DebugElementData
-}
-type Clay__AlignClay__DebugElementDataArray struct {
-	c int8
-	x Clay__DebugElementDataArray
-}
-type Clay__Clay__DebugElementDataArrayWrapper struct {
-	wrapped Clay__DebugElementDataArray
-}
+type Clay__DebugElementDataArray Arena[*Clay__DebugElementData]
 
 func Clay__DebugElementDataArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__DebugElementDataArray {
-	return Clay__DebugElementDataArray{capacity: capacity, length: 0, internalArray: (*Clay__DebugElementData)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__DebugElementData{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__DebugElementData{}, "#member"))), arena))}
+	return Clay__DebugElementDataArray{capacity: capacity, length: 0, internalArray: (*Clay__DebugElementData)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__DebugElementData{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__DebugElementDataArray_Add(array *Clay__DebugElementDataArray, item Clay__DebugElementData) *Clay__DebugElementData {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1481,31 +902,13 @@ type Clay_LayoutElementHashMapItem struct {
 	generation            uint32
 	debugData             *Clay__DebugElementData
 }
-type Clay__AlignClay_LayoutElementHashMapItem struct {
-	c int8
-	x Clay_LayoutElementHashMapItem
-}
-type Clay__Clay_LayoutElementHashMapItemWrapper struct {
-	wrapped Clay_LayoutElementHashMapItem
-}
 
 var CLAY__LAYOUT_ELEMENT_HASH_MAP_ITEM_DEFAULT Clay_LayoutElementHashMapItem = Clay_LayoutElementHashMapItem{layoutElement: &CLAY__LAYOUT_ELEMENT_DEFAULT}
 
-type Clay__LayoutElementHashMapItemArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay_LayoutElementHashMapItem
-}
-type Clay__AlignClay__LayoutElementHashMapItemArray struct {
-	c int8
-	x Clay__LayoutElementHashMapItemArray
-}
-type Clay__Clay__LayoutElementHashMapItemArrayWrapper struct {
-	wrapped Clay__LayoutElementHashMapItemArray
-}
+type Clay__LayoutElementHashMapItemArray *Clay_LayoutElementHashMapItem
 
 func Clay__LayoutElementHashMapItemArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementHashMapItemArray {
-	return Clay__LayoutElementHashMapItemArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutElementHashMapItem)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutElementHashMapItem{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay_LayoutElementHashMapItem{}, "#member"))), arena))}
+	return Clay__LayoutElementHashMapItemArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutElementHashMapItem)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutElementHashMapItem{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__LayoutElementHashMapItemArray_Get(array *Clay__LayoutElementHashMapItemArray, index int32) *Clay_LayoutElementHashMapItem {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -1532,31 +935,13 @@ type Clay__MeasuredWord struct {
 	width       float32
 	next        int32
 }
-type Clay__AlignClay__MeasuredWord struct {
-	c int8
-	x Clay__MeasuredWord
-}
-type Clay__Clay__MeasuredWordWrapper struct {
-	wrapped Clay__MeasuredWord
-}
 
 var CLAY__MEASURED_WORD_DEFAULT Clay__MeasuredWord = Clay__MeasuredWord{next: -1}
 
-type Clay__MeasuredWordArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__MeasuredWord
-}
-type Clay__AlignClay__MeasuredWordArray struct {
-	c int8
-	x Clay__MeasuredWordArray
-}
-type Clay__Clay__MeasuredWordArrayWrapper struct {
-	wrapped Clay__MeasuredWordArray
-}
+type Clay__MeasuredWordArray *Clay__MeasuredWord
 
 func Clay__MeasuredWordArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__MeasuredWordArray {
-	return Clay__MeasuredWordArray{capacity: capacity, length: 0, internalArray: (*Clay__MeasuredWord)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__MeasuredWord{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__MeasuredWord{}, "#member"))), arena))}
+	return Clay__MeasuredWordArray{capacity: capacity, length: 0, internalArray: (*Clay__MeasuredWord)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__MeasuredWord{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__MeasuredWordArray_Get(array *Clay__MeasuredWordArray, index int32) *Clay__MeasuredWord {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -1595,31 +980,13 @@ type Clay__MeasureTextCacheItem struct {
 	nextIndex               int32
 	generation              uint32
 }
-type Clay__AlignClay__MeasureTextCacheItem struct {
-	c int8
-	x Clay__MeasureTextCacheItem
-}
-type Clay__Clay__MeasureTextCacheItemWrapper struct {
-	wrapped Clay__MeasureTextCacheItem
-}
 
 var CLAY__MEASURE_TEXT_CACHE_ITEM_DEFAULT Clay__MeasureTextCacheItem = Clay__MeasureTextCacheItem{measuredWordsStartIndex: -1}
 
-type Clay__MeasureTextCacheItemArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__MeasureTextCacheItem
-}
-type Clay__AlignClay__MeasureTextCacheItemArray struct {
-	c int8
-	x Clay__MeasureTextCacheItemArray
-}
-type Clay__Clay__MeasureTextCacheItemArrayWrapper struct {
-	wrapped Clay__MeasureTextCacheItemArray
-}
+type Clay__MeasureTextCacheItemArray *Clay__MeasureTextCacheItem
 
 func Clay__MeasureTextCacheItemArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__MeasureTextCacheItemArray {
-	return Clay__MeasureTextCacheItemArray{capacity: capacity, length: 0, internalArray: (*Clay__MeasureTextCacheItem)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__MeasureTextCacheItem{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__MeasureTextCacheItem{}, "#member"))), arena))}
+	return Clay__MeasureTextCacheItemArray{capacity: capacity, length: 0, internalArray: (*Clay__MeasureTextCacheItem)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__MeasureTextCacheItem{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__MeasureTextCacheItemArray_Get(array *Clay__MeasureTextCacheItemArray, index int32) *Clay__MeasureTextCacheItem {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -1650,21 +1017,10 @@ func Clay__MeasureTextCacheItemArray_Set(array *Clay__MeasureTextCacheItemArray,
 	}
 }
 
-type Clay__int32_tArray struct {
-	capacity      int32
-	length        int32
-	internalArray *int32
-}
-type Clay__AlignClay__int32_tArray struct {
-	c int8
-	x Clay__int32_tArray
-}
-type Clay__Clay__int32_tArrayWrapper struct {
-	wrapped Clay__int32_tArray
-}
+type Clay__int32_tArray Arena[int32]
 
 func Clay__int32_tArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__int32_tArray {
-	return Clay__int32_tArray{capacity: capacity, length: 0, internalArray: (*int32)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(int32(0))), uint32(int32(_cxgo_offsetof(Clay__Alignint32_t{}, "#member"))), arena))}
+	return Clay__int32_tArray(NewArena[int32](capacity))
 }
 func Clay__int32_tArray_Get(array *Clay__int32_tArray, index int32) int32 {
 	if Clay__Array_RangeCheck(index, array.length) {
@@ -1707,31 +1063,13 @@ type Clay__LayoutElementTreeNode struct {
 	position        Clay_Vector2
 	nextChildOffset Clay_Vector2
 }
-type Clay__AlignClay__LayoutElementTreeNode struct {
-	c int8
-	x Clay__LayoutElementTreeNode
-}
-type Clay__Clay__LayoutElementTreeNodeWrapper struct {
-	wrapped Clay__LayoutElementTreeNode
-}
 
 var CLAY__LAYOUT_ELEMENT_TREE_NODE_DEFAULT Clay__LayoutElementTreeNode = Clay__LayoutElementTreeNode{}
 
-type Clay__LayoutElementTreeNodeArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__LayoutElementTreeNode
-}
-type Clay__AlignClay__LayoutElementTreeNodeArray struct {
-	c int8
-	x Clay__LayoutElementTreeNodeArray
-}
-type Clay__Clay__LayoutElementTreeNodeArrayWrapper struct {
-	wrapped Clay__LayoutElementTreeNodeArray
-}
+type Clay__LayoutElementTreeNodeArray *Clay__LayoutElementTreeNode
 
 func Clay__LayoutElementTreeNodeArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementTreeNodeArray {
-	return Clay__LayoutElementTreeNodeArray{capacity: capacity, length: 0, internalArray: (*Clay__LayoutElementTreeNode)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__LayoutElementTreeNode{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__LayoutElementTreeNode{}, "#member"))), arena))}
+	return Clay__LayoutElementTreeNodeArray{capacity: capacity, length: 0, internalArray: (*Clay__LayoutElementTreeNode)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__LayoutElementTreeNode{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__LayoutElementTreeNodeArray_Add(array *Clay__LayoutElementTreeNodeArray, item Clay__LayoutElementTreeNode) *Clay__LayoutElementTreeNode {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1759,31 +1097,13 @@ type Clay__LayoutElementTreeRoot struct {
 	zIndex             int32
 	pointerOffset      Clay_Vector2
 }
-type Clay__AlignClay__LayoutElementTreeRoot struct {
-	c int8
-	x Clay__LayoutElementTreeRoot
-}
-type Clay__Clay__LayoutElementTreeRootWrapper struct {
-	wrapped Clay__LayoutElementTreeRoot
-}
 
 var CLAY__LAYOUT_ELEMENT_TREE_ROOT_DEFAULT Clay__LayoutElementTreeRoot = Clay__LayoutElementTreeRoot{}
 
-type Clay__LayoutElementTreeRootArray struct {
-	capacity      int32
-	length        int32
-	internalArray *Clay__LayoutElementTreeRoot
-}
-type Clay__AlignClay__LayoutElementTreeRootArray struct {
-	c int8
-	x Clay__LayoutElementTreeRootArray
-}
-type Clay__Clay__LayoutElementTreeRootArrayWrapper struct {
-	wrapped Clay__LayoutElementTreeRootArray
-}
+type Clay__LayoutElementTreeRootArray *Clay__LayoutElementTreeRoot
 
 func Clay__LayoutElementTreeRootArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementTreeRootArray {
-	return Clay__LayoutElementTreeRootArray{capacity: capacity, length: 0, internalArray: (*Clay__LayoutElementTreeRoot)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__LayoutElementTreeRoot{})), uint32(int32(_cxgo_offsetof(Clay__AlignClay__LayoutElementTreeRoot{}, "#member"))), arena))}
+	return Clay__LayoutElementTreeRootArray{capacity: capacity, length: 0, internalArray: (*Clay__LayoutElementTreeRoot)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__LayoutElementTreeRoot{})), uint32(int32(_cxgo_offsetof)), arena))}
 }
 func Clay__LayoutElementTreeRootArray_Add(array *Clay__LayoutElementTreeRootArray, item Clay__LayoutElementTreeRoot) *Clay__LayoutElementTreeRoot {
 	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
@@ -1814,34 +1134,15 @@ func Clay__LayoutElementTreeRootArray_Set(array *Clay__LayoutElementTreeRootArra
 	}
 }
 
-type Clay__CharArray struct {
-	capacity      int32
-	length        int32
-	internalArray *uint8
-}
-type Clay__AlignClay__CharArray struct {
-	c int8
-	x Clay__CharArray
-}
-type Clay__Clay__CharArrayWrapper struct {
-	wrapped Clay__CharArray
-}
+type Clay__CharArray *uint8
 
 func Clay__CharArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__CharArray {
 	return Clay__CharArray{capacity: capacity, length: 0, internalArray: (*uint8)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(uint8(0))), uint32(int32(_cxgo_offsetof(Clay__Alignuint8_t{}, "#member"))), arena))}
 }
 
-type Clay__AlignClay_Context struct {
-	c int8
-	x Clay_Context
-}
-type Clay__Clay_ContextWrapper struct {
-	wrapped Clay_Context
-}
-
 func Clay__Context_Allocate_Arena(arena *Clay_Arena) *Clay_Context {
 	var (
-		alignment          uint32 = uint32(int32(_cxgo_offsetof(Clay__AlignClay_Context{}, "#member")))
+		alignment          uint32 = uint32(int32(_cxgo_offsetof))
 		totalSizeBytes     uint64 = uint64(unsafe.Sizeof(Clay_Context{}))
 		nextAllocAddress   uint64 = arena.nextAllocation + uint64(uintptr(unsafe.Pointer(arena.memory)))
 		arenaOffsetAligned uint64 = nextAllocAddress + (uint64(alignment) - (nextAllocAddress & uint64(alignment)))
@@ -3564,7 +2865,7 @@ func Clay__WarningArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__
 		totalSizeBytes     uint64             = uint64(uintptr(capacity) * unsafe.Sizeof(Clay_String{}))
 		array              Clay__WarningArray = Clay__WarningArray{capacity: capacity, length: 0}
 		nextAllocAddress   uint64             = arena.nextAllocation + uint64(uintptr(unsafe.Pointer(arena.memory)))
-		arenaOffsetAligned uint64             = nextAllocAddress + uint64(_cxgo_offsetof(Clay__AlignClay_String{}, "#member")-int(nextAllocAddress%uint64(_cxgo_offsetof(Clay__AlignClay_String{}, "#member"))))
+		arenaOffsetAligned uint64             = nextAllocAddress + uint64(_cxgo_offsetof-int(nextAllocAddress%uint64(_cxgo_offsetof)))
 	)
 	arenaOffsetAligned -= uint64(uintptr(unsafe.Pointer(arena.memory)))
 	if arenaOffsetAligned+totalSizeBytes <= arena.capacity {
@@ -3982,15 +3283,15 @@ func Clay_BeginLayout() {
 	context.booleanWarnings.maxRenderCommandsExceeded = false
 	Clay__OpenElement()
 	Clay__AttachId(Clay__HashString(Clay_String{length: int32(uint32((unsafe.Sizeof(string(0)) / unsafe.Sizeof(byte(0))) - unsafe.Sizeof(byte(0)))), chars: libc.CString("Clay__RootContainer")}, 0, 0))
-	Clay__AttachLayoutConfig(Clay__StoreLayoutConfig(Clay__Clay_LayoutConfigWrapper{wrapped: Clay_LayoutConfig{sizing: Clay_Sizing{width: Clay_SizingAxis{size: struct {
-		// union
-		minMax  Clay_SizingMinMax
-		percent float32
-	}{minMax: Clay_SizingMinMax{min: rootDimensions.width, max: rootDimensions.width}}, type_: CLAY__SIZING_TYPE_FIXED}, height: Clay_SizingAxis{size: struct {
-		// union
-		minMax  Clay_SizingMinMax
-		percent float32
-	}{minMax: Clay_SizingMinMax{min: rootDimensions.height, max: rootDimensions.height}}, type_: CLAY__SIZING_TYPE_FIXED}}}}.wrapped))
+	// Clay__AttachLayoutConfig(Clay__StoreLayoutConfig(Clay__Clay_LayoutConfigWrapper{wrapped: Clay_LayoutConfig{sizing: Clay_Sizing{width: Clay_SizingAxis{size: struct {
+	// 	// union
+	// 	minMax  Clay_SizingMinMax
+	// 	percent float32
+	// }{minMax: Clay_SizingMinMax{min: rootDimensions.width, max: rootDimensions.width}}, type_: CLAY__SIZING_TYPE_FIXED}, height: Clay_SizingAxis{size: struct {
+	// 	// union
+	// 	minMax  Clay_SizingMinMax
+	// 	percent float32
+	// }{minMax: Clay_SizingMinMax{min: rootDimensions.height, max: rootDimensions.height}}, type_: CLAY__SIZING_TYPE_FIXED}}}}.wrapped))
 	Clay__ElementPostConfiguration()
 	Clay__int32_tArray_Add(&context.openLayoutElementStack, 0)
 	Clay__LayoutElementTreeRootArray_Add(&context.layoutElementTreeRoots, Clay__LayoutElementTreeRoot{})
