@@ -390,35 +390,9 @@ type Clay__WarningArray *Clay__Warning
 
 type Clay__BoolArray Arena[bool]
 
-func Clay__BoolArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__BoolArray {
-	return Clay__BoolArray(NewArena[bool](capacity))
-}
-
 var CLAY__ELEMENT_ID_DEFAULT Clay_ElementId
 
 type Clay__ElementIdArray Arena[Clay_ElementId]
-
-func Clay__ElementIdArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ElementIdArray {
-	return Clay__ElementIdArray{}
-}
-func Clay__ElementIdArray_Get(array *Clay__ElementIdArray, index int32) *Clay_ElementId {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay_ElementId)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ElementId{})*uintptr(index)))
-	}
-	return &CLAY__ELEMENT_ID_DEFAULT
-}
-func Clay__ElementIdArray_Add(array *Clay__ElementIdArray, item Clay_ElementId) *Clay_ElementId {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_ElementId)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ElementId{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_ElementId)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ElementId{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__ELEMENT_ID_DEFAULT
-}
 
 var CLAY__ELEMENT_CONFIG_DEFAULT Clay_ElementConfig = Clay_ElementConfig{type_: CLAY__ELEMENT_CONFIG_TYPE_NONE, config: Clay_ElementConfigUnion{}}
 
@@ -427,34 +401,6 @@ type Clay__ElementConfigArray *Clay_ElementConfig
 type Clay__ElementConfigArraySlice struct {
 	length        int32
 	internalArray *Clay_ElementConfig
-}
-
-func Clay__ElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ElementConfigArray {
-	return Clay__ElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__ElementConfigArray_Get(array *Clay__ElementConfigArray, index int32) *Clay_ElementConfig {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay_ElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ElementConfig{})*uintptr(index)))
-	}
-	return &CLAY__ELEMENT_CONFIG_DEFAULT
-}
-func Clay__ElementConfigArray_Add(array *Clay__ElementConfigArray, item Clay_ElementConfig) *Clay_ElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_ElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_ElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__ELEMENT_CONFIG_DEFAULT
-}
-func Clay__ElementConfigArraySlice_Get(slice *Clay__ElementConfigArraySlice, index int32) *Clay_ElementConfig {
-	if Clay__Array_RangeCheck(index, slice.length) {
-		return (*Clay_ElementConfig)(unsafe.Add(unsafe.Pointer(slice.internalArray), unsafe.Sizeof(Clay_ElementConfig{})*uintptr(index)))
-	}
-	return &CLAY__ELEMENT_CONFIG_DEFAULT
 }
 
 var CLAY_LAYOUT_DEFAULT Clay_LayoutConfig = Clay_LayoutConfig{sizing: Clay_Sizing{width: Clay_SizingAxis{size: struct {
@@ -469,159 +415,31 @@ var CLAY_LAYOUT_DEFAULT Clay_LayoutConfig = Clay_LayoutConfig{sizing: Clay_Sizin
 
 type Clay__LayoutConfigArray *Clay_LayoutConfig
 
-func Clay__LayoutConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutConfigArray {
-	return Clay__LayoutConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__LayoutConfigArray_Add(array *Clay__LayoutConfigArray, item Clay_LayoutConfig) *Clay_LayoutConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_LayoutConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_LayoutConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY_LAYOUT_DEFAULT
-}
-
 var CLAY__RECTANGLE_ELEMENT_CONFIG_DEFAULT Clay_RectangleElementConfig = Clay_RectangleElementConfig{}
 
 type Clay__RectangleElementConfigArray *Clay_RectangleElementConfig
-
-func Clay__RectangleElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__RectangleElementConfigArray {
-	return Clay__RectangleElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_RectangleElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_RectangleElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__RectangleElementConfigArray_Add(array *Clay__RectangleElementConfigArray, item Clay_RectangleElementConfig) *Clay_RectangleElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_RectangleElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_RectangleElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_RectangleElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_RectangleElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__RECTANGLE_ELEMENT_CONFIG_DEFAULT
-}
 
 var CLAY__TEXT_ELEMENT_CONFIG_DEFAULT Clay_TextElementConfig = Clay_TextElementConfig{}
 
 type Clay__TextElementConfigArray *Clay_TextElementConfig
 
-func Clay__TextElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__TextElementConfigArray {
-	return Clay__TextElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_TextElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_TextElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__TextElementConfigArray_Add(array *Clay__TextElementConfigArray, item Clay_TextElementConfig) *Clay_TextElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_TextElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_TextElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_TextElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_TextElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__TEXT_ELEMENT_CONFIG_DEFAULT
-}
-
 var CLAY__IMAGE_ELEMENT_CONFIG_DEFAULT Clay_ImageElementConfig = Clay_ImageElementConfig{}
 
 type Clay__ImageElementConfigArray *Clay_ImageElementConfig
-
-func Clay__ImageElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ImageElementConfigArray {
-	return Clay__ImageElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ImageElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ImageElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__ImageElementConfigArray_Add(array *Clay__ImageElementConfigArray, item Clay_ImageElementConfig) *Clay_ImageElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_ImageElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ImageElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_ImageElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ImageElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__IMAGE_ELEMENT_CONFIG_DEFAULT
-}
 
 var CLAY__FLOATING_ELEMENT_CONFIG_DEFAULT Clay_FloatingElementConfig = Clay_FloatingElementConfig{}
 
 type Clay__FloatingElementConfigArray *Clay_FloatingElementConfig
 
-func Clay__FloatingElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__FloatingElementConfigArray {
-	return Clay__FloatingElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_FloatingElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_FloatingElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__FloatingElementConfigArray_Add(array *Clay__FloatingElementConfigArray, item Clay_FloatingElementConfig) *Clay_FloatingElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_FloatingElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_FloatingElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_FloatingElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_FloatingElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__FLOATING_ELEMENT_CONFIG_DEFAULT
-}
-
 var CLAY__CUSTOM_ELEMENT_CONFIG_DEFAULT Clay_CustomElementConfig = Clay_CustomElementConfig{}
 
 type Clay__CustomElementConfigArray *Clay_CustomElementConfig
-
-func Clay__CustomElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__CustomElementConfigArray {
-	return Clay__CustomElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_CustomElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_CustomElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__CustomElementConfigArray_Add(array *Clay__CustomElementConfigArray, item Clay_CustomElementConfig) *Clay_CustomElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_CustomElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_CustomElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_CustomElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_CustomElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__CUSTOM_ELEMENT_CONFIG_DEFAULT
-}
 
 var CLAY__SCROLL_ELEMENT_CONFIG_DEFAULT Clay_ScrollElementConfig = Clay_ScrollElementConfig{horizontal: false}
 
 type Clay__ScrollElementConfigArray *Clay_ScrollElementConfig
 
-func Clay__ScrollElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ScrollElementConfigArray {
-	return Clay__ScrollElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_ScrollElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_ScrollElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__ScrollElementConfigArray_Add(array *Clay__ScrollElementConfigArray, item Clay_ScrollElementConfig) *Clay_ScrollElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_ScrollElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ScrollElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_ScrollElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_ScrollElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__SCROLL_ELEMENT_CONFIG_DEFAULT
-}
-
 type Clay__StringArraySlice Arena[*Clay_String]
-
-func Clay__StringArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__StringArray {
-	return Clay__StringArray{capacity: capacity, length: 0, internalArray: (*Clay_String)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_String{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__StringArray_Add(array *Clay__StringArray, item Clay_String) *Clay_String {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_String)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_String{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_String)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_String{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__STRING_DEFAULT
-}
 
 type Clay__WrappedTextLine struct {
 	dimensions Clay_Dimensions
@@ -634,28 +452,6 @@ type Clay__WrappedTextLineArray *Clay__WrappedTextLine
 
 type Clay__WrappedTextLineArraySlice Arena[*Clay__WrappedTextLine]
 
-func Clay__WrappedTextLineArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__WrappedTextLineArray {
-	return Clay__WrappedTextLineArray{capacity: capacity, length: 0, internalArray: (*Clay__WrappedTextLine)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__WrappedTextLine{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__WrappedTextLineArray_Add(array *Clay__WrappedTextLineArray, item Clay__WrappedTextLine) *Clay__WrappedTextLine {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__WrappedTextLine)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__WrappedTextLine{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__WrappedTextLine)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__WrappedTextLine{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__WRAPPED_TEXT_LINE_DEFAULT
-}
-func Clay__WrappedTextLineArray_Get(array *Clay__WrappedTextLineArray, index int32) *Clay__WrappedTextLine {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__WrappedTextLine)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__WrappedTextLine{})*uintptr(index)))
-	}
-	return &CLAY__WRAPPED_TEXT_LINE_DEFAULT
-}
-
 type Clay__TextElementData struct {
 	text                Clay_String
 	preferredDimensions Clay_Dimensions
@@ -667,47 +463,9 @@ var CLAY__TEXT_ELEMENT_DATA_DEFAULT Clay__TextElementData = Clay__TextElementDat
 
 type Clay__TextElementDataArray *Clay__TextElementData
 
-func Clay__TextElementDataArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__TextElementDataArray {
-	return Clay__TextElementDataArray{capacity: capacity, length: 0, internalArray: (*Clay__TextElementData)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__TextElementData{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__TextElementDataArray_Get(array *Clay__TextElementDataArray, index int32) *Clay__TextElementData {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__TextElementData)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__TextElementData{})*uintptr(index)))
-	}
-	return &CLAY__TEXT_ELEMENT_DATA_DEFAULT
-}
-func Clay__TextElementDataArray_Add(array *Clay__TextElementDataArray, item Clay__TextElementData) *Clay__TextElementData {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__TextElementData)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__TextElementData{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__TextElementData)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__TextElementData{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__TEXT_ELEMENT_DATA_DEFAULT
-}
-
 var CLAY__BORDER_ELEMENT_CONFIG_DEFAULT Clay_BorderElementConfig = Clay_BorderElementConfig{}
 
 type Clay__BorderElementConfigArray *Clay_BorderElementConfig
-
-func Clay__BorderElementConfigArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__BorderElementConfigArray {
-	return Clay__BorderElementConfigArray{capacity: capacity, length: 0, internalArray: (*Clay_BorderElementConfig)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_BorderElementConfig{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__BorderElementConfigArray_Add(array *Clay__BorderElementConfigArray, item Clay_BorderElementConfig) *Clay_BorderElementConfig {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_BorderElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_BorderElementConfig{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_BorderElementConfig)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_BorderElementConfig{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__BORDER_ELEMENT_CONFIG_DEFAULT
-}
 
 type Clay__LayoutElementChildren struct {
 	elements *int32
@@ -732,84 +490,9 @@ var CLAY__LAYOUT_ELEMENT_DEFAULT Clay_LayoutElement = Clay_LayoutElement{}
 
 type Clay_LayoutElementArray Arena[*Clay_LayoutElement]
 
-func Clay_LayoutElementArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay_LayoutElementArray {
-	return Clay_LayoutElementArray(NewArena[*Clay_LayoutElement](capacity))
-}
-func Clay_LayoutElementArray_Add(array *Clay_LayoutElementArray, item Clay_LayoutElement) *Clay_LayoutElement {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutElement{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutElement{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_DEFAULT
-}
-func Clay_LayoutElementArray_Get(array *Clay_LayoutElementArray, index int32) *Clay_LayoutElement {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutElement{})*uintptr(index)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_DEFAULT
-}
-
 type Clay__LayoutElementPointerArray Arena[*Clay_LayoutElement]
 
-func Clay__LayoutElementPointerArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementPointerArray {
-	return Clay__LayoutElementPointerArray{capacity: capacity, length: 0, internalArray: (**Clay_LayoutElement)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof((*Clay_LayoutElement)(nil))), uint32(int32(_cxgo_offsetof(Clay__Alignpointer{}, "#member"))), arena))}
-}
-func Clay__LayoutElementPointerArray_Add(array *Clay__LayoutElementPointerArray, item *Clay_LayoutElement) **Clay_LayoutElement {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(**Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof((*Clay_LayoutElement)(nil))*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (**Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof((*Clay_LayoutElement)(nil))*uintptr(int(array.length)-1)))
-	}
-	return (**Clay_LayoutElement)(unsafe.Pointer(uintptr(CLAY__NULL)))
-}
-func Clay__LayoutElementPointerArray_Get(array *Clay__LayoutElementPointerArray, index int32) *Clay_LayoutElement {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return *(**Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof((*Clay_LayoutElement)(nil))*uintptr(index)))
-	}
-	return (*Clay_LayoutElement)(unsafe.Pointer(uintptr(CLAY__NULL)))
-}
-func Clay__LayoutElementPointerArray_RemoveSwapback(array *Clay__LayoutElementPointerArray, index int32) *Clay_LayoutElement {
-	if Clay__Array_RangeCheck(index, array.length) {
-		array.length--
-		var removed *Clay_LayoutElement = *(**Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof((*Clay_LayoutElement)(nil))*uintptr(index)))
-		*(**Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof((*Clay_LayoutElement)(nil))*uintptr(index))) = *(**Clay_LayoutElement)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof((*Clay_LayoutElement)(nil))*uintptr(array.length)))
-		return removed
-	}
-	return (*Clay_LayoutElement)(unsafe.Pointer(uintptr(CLAY__NULL)))
-}
-
 var CLAY__RENDER_COMMAND_DEFAULT Clay_RenderCommand = Clay_RenderCommand{}
-
-func Clay_RenderCommandArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay_RenderCommandArray {
-	return Clay_RenderCommandArray{capacity: capacity, length: 0, internalArray: (*Clay_RenderCommand)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_RenderCommand{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay_RenderCommandArray_Add(array *Clay_RenderCommandArray, item Clay_RenderCommand) *Clay_RenderCommand {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_RenderCommand)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_RenderCommand{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_RenderCommand)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_RenderCommand{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__RENDER_COMMAND_DEFAULT
-}
-func Clay_RenderCommandArray_Get(array *Clay_RenderCommandArray, index int32) *Clay_RenderCommand {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay_RenderCommand)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_RenderCommand{})*uintptr(index)))
-	}
-	return &CLAY__RENDER_COMMAND_DEFAULT
-}
 
 type Clay__ScrollContainerDataInternal struct {
 	layoutElement       *Clay_LayoutElement
@@ -830,37 +513,6 @@ var CLAY__SCROLL_CONTAINER_DEFAULT Clay__ScrollContainerDataInternal = Clay__Scr
 
 type Clay__ScrollContainerDataInternalArray Arena[*Clay__ScrollContainerDataInternal]
 
-func Clay__ScrollContainerDataInternalArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__ScrollContainerDataInternalArray {
-	return Clay__ScrollContainerDataInternalArray{capacity: capacity, length: 0, internalArray: (*Clay__ScrollContainerDataInternal)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__ScrollContainerDataInternal{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__ScrollContainerDataInternalArray_Add(array *Clay__ScrollContainerDataInternalArray, item Clay__ScrollContainerDataInternal) *Clay__ScrollContainerDataInternal {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__ScrollContainerDataInternal)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__ScrollContainerDataInternal{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__ScrollContainerDataInternal)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__ScrollContainerDataInternal{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__SCROLL_CONTAINER_DEFAULT
-}
-func Clay__ScrollContainerDataInternalArray_Get(array *Clay__ScrollContainerDataInternalArray, index int32) *Clay__ScrollContainerDataInternal {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__ScrollContainerDataInternal)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__ScrollContainerDataInternal{})*uintptr(index)))
-	}
-	return &CLAY__SCROLL_CONTAINER_DEFAULT
-}
-func Clay__ScrollContainerDataInternalArray_RemoveSwapback(array *Clay__ScrollContainerDataInternalArray, index int32) Clay__ScrollContainerDataInternal {
-	if Clay__Array_RangeCheck(index, array.length) {
-		array.length--
-		var removed Clay__ScrollContainerDataInternal = *(*Clay__ScrollContainerDataInternal)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__ScrollContainerDataInternal{})*uintptr(index)))
-		*(*Clay__ScrollContainerDataInternal)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__ScrollContainerDataInternal{})*uintptr(index))) = *(*Clay__ScrollContainerDataInternal)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__ScrollContainerDataInternal{})*uintptr(array.length)))
-		return removed
-	}
-	return CLAY__SCROLL_CONTAINER_DEFAULT
-}
-
 type Clay__DebugElementData struct {
 	collision bool
 	collapsed bool
@@ -869,28 +521,6 @@ type Clay__DebugElementData struct {
 var CLAY__DEBUG_ELEMENT_DATA_DEFAULT Clay__DebugElementData = Clay__DebugElementData{collision: false}
 
 type Clay__DebugElementDataArray Arena[*Clay__DebugElementData]
-
-func Clay__DebugElementDataArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__DebugElementDataArray {
-	return Clay__DebugElementDataArray{capacity: capacity, length: 0, internalArray: (*Clay__DebugElementData)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__DebugElementData{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__DebugElementDataArray_Add(array *Clay__DebugElementDataArray, item Clay__DebugElementData) *Clay__DebugElementData {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__DebugElementData)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__DebugElementData{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__DebugElementData)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__DebugElementData{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__DEBUG_ELEMENT_DATA_DEFAULT
-}
-func Clay__DebugElementDataArray_Get(array *Clay__DebugElementDataArray, index int32) *Clay__DebugElementData {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__DebugElementData)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__DebugElementData{})*uintptr(index)))
-	}
-	return &CLAY__DEBUG_ELEMENT_DATA_DEFAULT
-}
 
 type Clay_LayoutElementHashMapItem struct {
 	boundingBox           Clay_BoundingBox
@@ -907,28 +537,6 @@ var CLAY__LAYOUT_ELEMENT_HASH_MAP_ITEM_DEFAULT Clay_LayoutElementHashMapItem = C
 
 type Clay__LayoutElementHashMapItemArray *Clay_LayoutElementHashMapItem
 
-func Clay__LayoutElementHashMapItemArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementHashMapItemArray {
-	return Clay__LayoutElementHashMapItemArray{capacity: capacity, length: 0, internalArray: (*Clay_LayoutElementHashMapItem)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay_LayoutElementHashMapItem{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__LayoutElementHashMapItemArray_Get(array *Clay__LayoutElementHashMapItemArray, index int32) *Clay_LayoutElementHashMapItem {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay_LayoutElementHashMapItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutElementHashMapItem{})*uintptr(index)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_HASH_MAP_ITEM_DEFAULT
-}
-func Clay__LayoutElementHashMapItemArray_Add(array *Clay__LayoutElementHashMapItemArray, item Clay_LayoutElementHashMapItem) *Clay_LayoutElementHashMapItem {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay_LayoutElementHashMapItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutElementHashMapItem{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay_LayoutElementHashMapItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay_LayoutElementHashMapItem{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_HASH_MAP_ITEM_DEFAULT
-}
-
 type Clay__MeasuredWord struct {
 	startOffset int32
 	length      int32
@@ -939,38 +547,6 @@ type Clay__MeasuredWord struct {
 var CLAY__MEASURED_WORD_DEFAULT Clay__MeasuredWord = Clay__MeasuredWord{next: -1}
 
 type Clay__MeasuredWordArray *Clay__MeasuredWord
-
-func Clay__MeasuredWordArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__MeasuredWordArray {
-	return Clay__MeasuredWordArray{capacity: capacity, length: 0, internalArray: (*Clay__MeasuredWord)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__MeasuredWord{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__MeasuredWordArray_Get(array *Clay__MeasuredWordArray, index int32) *Clay__MeasuredWord {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__MeasuredWord)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasuredWord{})*uintptr(index)))
-	}
-	return &CLAY__MEASURED_WORD_DEFAULT
-}
-func Clay__MeasuredWordArray_Set(array *Clay__MeasuredWordArray, index int32, value Clay__MeasuredWord) {
-	if Clay__Array_RangeCheck(index, array.capacity) {
-		*(*Clay__MeasuredWord)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasuredWord{})*uintptr(index))) = value
-		if int(index) < int(array.length) {
-			array.length = array.length
-		} else {
-			array.length = int32(int(index) + 1)
-		}
-	}
-}
-func Clay__MeasuredWordArray_Add(array *Clay__MeasuredWordArray, item Clay__MeasuredWord) *Clay__MeasuredWord {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__MeasuredWord)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasuredWord{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__MeasuredWord)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasuredWord{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__MEASURED_WORD_DEFAULT
-}
 
 type Clay__MeasureTextCacheItem struct {
 	unwrappedDimensions     Clay_Dimensions
@@ -985,78 +561,7 @@ var CLAY__MEASURE_TEXT_CACHE_ITEM_DEFAULT Clay__MeasureTextCacheItem = Clay__Mea
 
 type Clay__MeasureTextCacheItemArray *Clay__MeasureTextCacheItem
 
-func Clay__MeasureTextCacheItemArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__MeasureTextCacheItemArray {
-	return Clay__MeasureTextCacheItemArray{capacity: capacity, length: 0, internalArray: (*Clay__MeasureTextCacheItem)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__MeasureTextCacheItem{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__MeasureTextCacheItemArray_Get(array *Clay__MeasureTextCacheItemArray, index int32) *Clay__MeasureTextCacheItem {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__MeasureTextCacheItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasureTextCacheItem{})*uintptr(index)))
-	}
-	return &CLAY__MEASURE_TEXT_CACHE_ITEM_DEFAULT
-}
-func Clay__MeasureTextCacheItemArray_Add(array *Clay__MeasureTextCacheItemArray, item Clay__MeasureTextCacheItem) *Clay__MeasureTextCacheItem {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__MeasureTextCacheItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasureTextCacheItem{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__MeasureTextCacheItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasureTextCacheItem{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__MEASURE_TEXT_CACHE_ITEM_DEFAULT
-}
-func Clay__MeasureTextCacheItemArray_Set(array *Clay__MeasureTextCacheItemArray, index int32, value Clay__MeasureTextCacheItem) {
-	if Clay__Array_RangeCheck(index, array.capacity) {
-		*(*Clay__MeasureTextCacheItem)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__MeasureTextCacheItem{})*uintptr(index))) = value
-		if int(index) < int(array.length) {
-			array.length = array.length
-		} else {
-			array.length = int32(int(index) + 1)
-		}
-	}
-}
-
 type Clay__int32_tArray Arena[int32]
-
-func Clay__int32_tArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__int32_tArray {
-	return Clay__int32_tArray(NewArena[int32](capacity))
-}
-func Clay__int32_tArray_Get(array *Clay__int32_tArray, index int32) int32 {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return *(*int32)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(int32(0))*uintptr(index)))
-	}
-	return -1
-}
-func Clay__int32_tArray_Add(array *Clay__int32_tArray, item int32) {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*int32)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(int32(0))*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-	}
-}
-func Clay__int32_tArray_Set(array *Clay__int32_tArray, index int32, value int32) {
-	if Clay__Array_RangeCheck(index, array.capacity) {
-		*(*int32)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(int32(0))*uintptr(index))) = value
-		if int(index) < int(array.length) {
-			array.length = array.length
-		} else {
-			array.length = int32(int(index) + 1)
-		}
-	}
-}
-func Clay__int32_tArray_RemoveSwapback(array *Clay__int32_tArray, index int32) int32 {
-	if Clay__Array_RangeCheck(index, array.length) {
-		array.length--
-		var removed int32 = *(*int32)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(int32(0))*uintptr(index)))
-		*(*int32)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(int32(0))*uintptr(index))) = *(*int32)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(int32(0))*uintptr(array.length)))
-		return removed
-	}
-	return -1
-}
 
 type Clay__LayoutElementTreeNode struct {
 	layoutElement   *Clay_LayoutElement
@@ -1067,28 +572,6 @@ type Clay__LayoutElementTreeNode struct {
 var CLAY__LAYOUT_ELEMENT_TREE_NODE_DEFAULT Clay__LayoutElementTreeNode = Clay__LayoutElementTreeNode{}
 
 type Clay__LayoutElementTreeNodeArray *Clay__LayoutElementTreeNode
-
-func Clay__LayoutElementTreeNodeArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementTreeNodeArray {
-	return Clay__LayoutElementTreeNodeArray{capacity: capacity, length: 0, internalArray: (*Clay__LayoutElementTreeNode)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__LayoutElementTreeNode{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__LayoutElementTreeNodeArray_Add(array *Clay__LayoutElementTreeNodeArray, item Clay__LayoutElementTreeNode) *Clay__LayoutElementTreeNode {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__LayoutElementTreeNode)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeNode{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__LayoutElementTreeNode)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeNode{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_TREE_NODE_DEFAULT
-}
-func Clay__LayoutElementTreeNodeArray_Get(array *Clay__LayoutElementTreeNodeArray, index int32) *Clay__LayoutElementTreeNode {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__LayoutElementTreeNode)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeNode{})*uintptr(index)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_TREE_NODE_DEFAULT
-}
 
 type Clay__LayoutElementTreeRoot struct {
 	layoutElementIndex int32
@@ -1102,65 +585,7 @@ var CLAY__LAYOUT_ELEMENT_TREE_ROOT_DEFAULT Clay__LayoutElementTreeRoot = Clay__L
 
 type Clay__LayoutElementTreeRootArray *Clay__LayoutElementTreeRoot
 
-func Clay__LayoutElementTreeRootArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__LayoutElementTreeRootArray {
-	return Clay__LayoutElementTreeRootArray{capacity: capacity, length: 0, internalArray: (*Clay__LayoutElementTreeRoot)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(Clay__LayoutElementTreeRoot{})), uint32(int32(_cxgo_offsetof)), arena))}
-}
-func Clay__LayoutElementTreeRootArray_Add(array *Clay__LayoutElementTreeRootArray, item Clay__LayoutElementTreeRoot) *Clay__LayoutElementTreeRoot {
-	if Clay__Array_AddCapacityCheck(array.length, array.capacity) {
-		*(*Clay__LayoutElementTreeRoot)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeRoot{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__LayoutElementTreeRoot)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeRoot{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_TREE_ROOT_DEFAULT
-}
-func Clay__LayoutElementTreeRootArray_Get(array *Clay__LayoutElementTreeRootArray, index int32) *Clay__LayoutElementTreeRoot {
-	if Clay__Array_RangeCheck(index, array.length) {
-		return (*Clay__LayoutElementTreeRoot)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeRoot{})*uintptr(index)))
-	}
-	return &CLAY__LAYOUT_ELEMENT_TREE_ROOT_DEFAULT
-}
-func Clay__LayoutElementTreeRootArray_Set(array *Clay__LayoutElementTreeRootArray, index int32, value Clay__LayoutElementTreeRoot) {
-	if Clay__Array_RangeCheck(index, array.capacity) {
-		*(*Clay__LayoutElementTreeRoot)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__LayoutElementTreeRoot{})*uintptr(index))) = value
-		if int(index) < int(array.length) {
-			array.length = array.length
-		} else {
-			array.length = int32(int(index) + 1)
-		}
-	}
-}
-
 type Clay__CharArray *uint8
-
-func Clay__CharArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__CharArray {
-	return Clay__CharArray{capacity: capacity, length: 0, internalArray: (*uint8)(Clay__Array_Allocate_Arena(capacity, uint32(unsafe.Sizeof(uint8(0))), uint32(int32(_cxgo_offsetof(Clay__Alignuint8_t{}, "#member"))), arena))}
-}
-
-func Clay__Context_Allocate_Arena(arena *Clay_Arena) *Clay_Context {
-	var (
-		alignment          uint32 = uint32(int32(_cxgo_offsetof))
-		totalSizeBytes     uint64 = uint64(unsafe.Sizeof(Clay_Context{}))
-		nextAllocAddress   uint64 = arena.nextAllocation + uint64(uintptr(unsafe.Pointer(arena.memory)))
-		arenaOffsetAligned uint64 = nextAllocAddress + (uint64(alignment) - (nextAllocAddress & uint64(alignment)))
-	)
-	arenaOffsetAligned -= uint64(uintptr(unsafe.Pointer(arena.memory)))
-	if arenaOffsetAligned+totalSizeBytes > arena.capacity {
-		return nil
-	}
-	arena.nextAllocation = arenaOffsetAligned + totalSizeBytes
-	return (*Clay_Context)(unsafe.Pointer(uintptr(uint64(uintptr(unsafe.Pointer(arena.memory))) + arenaOffsetAligned)))
-}
-func Clay__WriteStringToCharBuffer(buffer *Clay__CharArray, string_ Clay_String) Clay_String {
-	for i := int32(0); int(i) < int(string_.length); i++ {
-		*(*uint8)(unsafe.Add(unsafe.Pointer(buffer.internalArray), int(buffer.length)+int(i))) = uint8(*(*byte)(unsafe.Add(unsafe.Pointer(string_.chars), i)))
-	}
-	buffer.length += string_.length
-	return Clay_String{length: string_.length, chars: (*byte)(unsafe.Pointer((*uint8)(unsafe.Add(unsafe.Pointer((*uint8)(unsafe.Add(unsafe.Pointer(buffer.internalArray), buffer.length))), -string_.length))))}
-}
 
 var Clay__MeasureText func(text *Clay_String, config *Clay_TextElementConfig) Clay_Dimensions
 var Clay__QueryScrollOffset func(elementId uint32) Clay_Vector2
@@ -2860,65 +2285,6 @@ func Clay__StoreBorderElementConfig(config Clay_BorderElementConfig) *Clay_Borde
 var Clay__debugViewWidth uint32 = 400
 var Clay__debugViewHighlightColor Clay_Color = Clay_Color{r: 168, g: 66, b: 28, a: 100}
 
-func Clay__WarningArray_Allocate_Arena(capacity int32, arena *Clay_Arena) Clay__WarningArray {
-	var (
-		totalSizeBytes     uint64             = uint64(uintptr(capacity) * unsafe.Sizeof(Clay_String{}))
-		array              Clay__WarningArray = Clay__WarningArray{capacity: capacity, length: 0}
-		nextAllocAddress   uint64             = arena.nextAllocation + uint64(uintptr(unsafe.Pointer(arena.memory)))
-		arenaOffsetAligned uint64             = nextAllocAddress + uint64(_cxgo_offsetof-int(nextAllocAddress%uint64(_cxgo_offsetof)))
-	)
-	arenaOffsetAligned -= uint64(uintptr(unsafe.Pointer(arena.memory)))
-	if arenaOffsetAligned+totalSizeBytes <= arena.capacity {
-		array.internalArray = (*Clay__Warning)(unsafe.Pointer(uintptr(uint64(uintptr(unsafe.Pointer(arena.memory))) + arenaOffsetAligned)))
-		arena.nextAllocation = arenaOffsetAligned + totalSizeBytes
-	} else {
-		Clay__currentContext.errorHandler.errorHandlerFunction(Clay_ErrorData{errorType: CLAY_ERROR_TYPE_ARENA_CAPACITY_EXCEEDED, errorText: Clay_String{length: int32(uint32((unsafe.Sizeof(string(0)) / unsafe.Sizeof(byte(0))) - unsafe.Sizeof(byte(0)))), chars: libc.CString("Clay attempted to allocate memory in its arena, but ran out of capacity. Try increasing the capacity of the arena passed to Clay_Initialize()")}, userData: Clay__currentContext.errorHandler.userData})
-	}
-	return array
-}
-func Clay__WarningArray_Add(array *Clay__WarningArray, item Clay__Warning) *Clay__Warning {
-	if int(array.length) < int(array.capacity) {
-		*(*Clay__Warning)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__Warning{})*uintptr(func() int32 {
-			p := &array.length
-			x := *p
-			*p++
-			return x
-		}()))) = item
-		return (*Clay__Warning)(unsafe.Add(unsafe.Pointer(array.internalArray), unsafe.Sizeof(Clay__Warning{})*uintptr(int(array.length)-1)))
-	}
-	return &CLAY__WARNING_DEFAULT
-}
-func Clay__Array_Allocate_Arena(capacity int32, itemSize uint32, alignment uint32, arena *Clay_Arena) unsafe.Pointer {
-	var (
-		totalSizeBytes     uint64 = uint64(int(capacity) * int(itemSize))
-		nextAllocAddress   uint64 = arena.nextAllocation + uint64(uintptr(unsafe.Pointer(arena.memory)))
-		arenaOffsetAligned uint64 = nextAllocAddress + (uint64(alignment) - nextAllocAddress%uint64(alignment))
-	)
-	arenaOffsetAligned -= uint64(uintptr(unsafe.Pointer(arena.memory)))
-	if arenaOffsetAligned+totalSizeBytes <= arena.capacity {
-		arena.nextAllocation = arenaOffsetAligned + totalSizeBytes
-		return unsafe.Pointer(uintptr(uint64(uintptr(unsafe.Pointer(arena.memory))) + arenaOffsetAligned))
-	} else {
-		Clay__currentContext.errorHandler.errorHandlerFunction(Clay_ErrorData{errorType: CLAY_ERROR_TYPE_ARENA_CAPACITY_EXCEEDED, errorText: Clay_String{length: int32(uint32((unsafe.Sizeof(string(0)) / unsafe.Sizeof(byte(0))) - unsafe.Sizeof(byte(0)))), chars: libc.CString("Clay attempted to allocate memory in its arena, but ran out of capacity. Try increasing the capacity of the arena passed to Clay_Initialize()")}, userData: Clay__currentContext.errorHandler.userData})
-	}
-	return unsafe.Pointer(uintptr(CLAY__NULL))
-}
-func Clay__Array_RangeCheck(index int32, length int32) bool {
-	if int(index) < int(length) && int(index) >= 0 {
-		return true
-	}
-	var context *Clay_Context = Clay_GetCurrentContext()
-	context.errorHandler.errorHandlerFunction(Clay_ErrorData{errorType: CLAY_ERROR_TYPE_INTERNAL_ERROR, errorText: Clay_String{length: int32(uint32((unsafe.Sizeof(string(0)) / unsafe.Sizeof(byte(0))) - unsafe.Sizeof(byte(0)))), chars: libc.CString("Clay attempted to make an out of bounds array access. This is an internal error and is likely a bug.")}, userData: context.errorHandler.userData})
-	return false
-}
-func Clay__Array_AddCapacityCheck(length int32, capacity int32) bool {
-	if int(length) < int(capacity) {
-		return true
-	}
-	var context *Clay_Context = Clay_GetCurrentContext()
-	context.errorHandler.errorHandlerFunction(Clay_ErrorData{errorType: CLAY_ERROR_TYPE_INTERNAL_ERROR, errorText: Clay_String{length: int32(uint32((unsafe.Sizeof(string(0)) / unsafe.Sizeof(byte(0))) - unsafe.Sizeof(byte(0)))), chars: libc.CString("Clay attempted to make an out of bounds array access. This is an internal error and is likely a bug.")}, userData: context.errorHandler.userData})
-	return false
-}
 func Clay_MinMemorySize() uint32 {
 	var (
 		fakeContext    Clay_Context  = Clay_Context{maxElementCount: Clay__defaultMaxElementCount, maxMeasureTextCacheWordCount: Clay__defaultMaxMeasureTextWordCacheCount, internalArena: Clay_Arena{capacity: math.MaxUint64, memory: nil}}
