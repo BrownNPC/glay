@@ -1,6 +1,5 @@
-# Glay 
+# Clay 
 
-
-#### A port of [Clay](https://github.com/nicbarker/clay) to Golang.
+####  [Clay](https://github.com/nicbarker/clay) Bindings to Golang.
 
 Work in progress
