@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	libname  = "libclay.so"
+	libname  = "./libclay.so"
 	libcname = "libc.so.6"
 )
 

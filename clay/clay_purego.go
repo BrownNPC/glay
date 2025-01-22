@@ -15,7 +15,7 @@ var (
 	_CreateArenaWithCapacityAndMemory func(capacity uint32, offset **byte) *Arena
 	_NewArena                         func(arena uintptr) *Arena
 	_SetPointerState                  func(position Vector2, pointerDown bool)
-	_Initialize                       func(arena *Arena, layoutDimensions uintptr, errorHandler uintptr) *Context
+	_Initialize                       func(arena uintptr, layoutDimensions uintptr, errorHandler uintptr) *Context
 	_UpdateScrollContainers           func(enableDragScrolling bool, scrollDelta Vector2, deltaTime float64)
 	_SetLayoutDimensions              func(dimensions Dimensions)
 	_BeginLayout                      func()
@@ -99,7 +99,7 @@ func init() {
 	purego.RegisterLibFunc(&_Initialize, libclay, "Clay_Initialize")
 	// purego.RegisterLibFunc(&_UpdateScrollContainers, libclay, "Clay_UpdateScrollContainers")
 	// purego.RegisterLibFunc(&_SetLayoutDimensions, libclay, "Clay_SetLayoutDimensions")
-	// purego.RegisterLibFunc(&_BeginLayout, libclay, "Clay_BeginLayout")
+	purego.RegisterLibFunc(&_BeginLayout, libclay, "Clay_BeginLayout")
 	// purego.RegisterLibFunc(&_EndLayout, libclay, "Clay_EndLayout")
 	// purego.RegisterLibFunc(&_GetElementId, libclay, "Clay_GetElementId")
 	// purego.RegisterLibFunc(&_GetElementIdWithIndex, libclay, "Clay_GetElementIdWithIndex")
@@ -115,6 +115,24 @@ func init() {
 	// purego.RegisterLibFunc(&_SetCullingEnabled, libclay, "Clay_SetCullingEnabled")
 	// purego.RegisterLibFunc(&_SetMaxElementCount, libclay, "Clay_SetMaxElementCount")
 	// purego.RegisterLibFunc(&_SetMaxMeasureTextCacheWordCount, libclay, "Clay_SetMaxMeasureTextCacheWordCount")
+
+	//Private Api
+	// purego.RegisterLibFunc(&_OpenElement, libclay, "_OpenElement")
+	// purego.RegisterLibFunc(&_CloseElement, libclay, "_CloseElement")
+	// purego.RegisterLibFunc(&_StoreLayoutConfig, libclay, "_StoreLayoutConfig")
+	// purego.RegisterLibFunc(&_ElementPostConfiguration, libclay, "_ElementPostConfiguration")
+	// purego.RegisterLibFunc(&_AttachLayoutConfig, libclay, "_AttachLayoutConfig")
+	// purego.RegisterLibFunc(&_AttachElementConfig, libclay, "_AttachElementConfig")
+	// purego.RegisterLibFunc(&_StoreRectangleElementConfig, libclay, "_StoreRectangleElementConfig")
+	// purego.RegisterLibFunc(&_StoreTextElementConfig, libclay, "_StoreTextElementConfig")
+	// purego.RegisterLibFunc(&_StoreImageElementConfig, libclay, "_StoreImageElementConfig")
+	// purego.RegisterLibFunc(&_StoreFloatingElementConfig, libclay, "_StoreFloatingElementConfig")
+	// purego.RegisterLibFunc(&_StoreCustomElementConfig, libclay, "_StoreCustomElementConfig")
+	// purego.RegisterLibFunc(&_StoreScrollElementConfig, libclay, "_StoreScrollElementConfig")
+	// purego.RegisterLibFunc(&_StoreBorderElementConfig, libclay, "_StoreBorderElementConfig")
+	// purego.RegisterLibFunc(&_HashString, libclay, "_HashString")
+	// purego.RegisterLibFunc(&_Noop, libclay, "_Noop")
+	// purego.RegisterLibFunc(&_OpenTextElement, libclay, "_OpenTextElement")
 
 }
 func clayStringToGoString(cString String) string {

@@ -325,8 +325,6 @@ type ErrorHandler struct {
 func MinMemorySize() uint32 {
 	if dynamic {
 		return _MinMemorySize()
-	} else {
-		panic("wtf")
 	}
 	return 0
 }
@@ -358,7 +356,7 @@ func Initialize(arena *Arena, layoutDimensions Dimensions, handleErrorFunc func(
 			return 0
 		})
 
-		ctx := _Initialize(arena, uintptr(unsafe.Pointer(&layoutDimensions)),
+		ctx := _Initialize(uintptr(unsafe.Pointer(&arena)), uintptr(unsafe.Pointer(&layoutDimensions)),
 			uintptr(unsafe.Pointer(&ErrorHandler{ErrorHandlerFunction: errorHandlerFunc})))
 		return ctx
 	}
@@ -374,7 +372,9 @@ func SetLayoutDimensions(dimensions Dimensions) {
 }
 
 func BeginLayout() {
-	// Implementation required
+	if dynamic {
+		_BeginLayout()
+	}
 }
 
 func EndLayout() RenderCommandArray {

@@ -10,9 +10,10 @@ func main() {
 
 	a := clay.NewArena()
 	handle := func(err error) {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	clay.Initialize(a, clay.Dimensions{Width: 200, Height: 200}, handle)
-
+	// causes segfault for some reason
+	// clay.BeginLayout()
 }
