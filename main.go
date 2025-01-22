@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(clay.MinMemorySize())
+	fmt.Println("size", clay.MinMemorySize())
 
 	a := clay.NewArena()
 	handle := func(err error) {

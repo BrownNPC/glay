@@ -325,6 +325,8 @@ type ErrorHandler struct {
 func MinMemorySize() uint32 {
 	if dynamic {
 		return _MinMemorySize()
+	} else {
+		panic("wtf")
 	}
 	return 0
 }
