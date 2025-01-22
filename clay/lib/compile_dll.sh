@@ -14,7 +14,7 @@ PLATFORM=$1
 case $PLATFORM in
     linux)
         echo "Compiling for Linux..."
-        gcc -shared -fPIC claybind.c -o ../../libclay.so
+        cc -shared -fPIC claybind.c -o ../../libclay.so
         ;;
     windows)
         echo "Compiling for Windows..."
@@ -22,7 +22,7 @@ case $PLATFORM in
         ;;
     macos)
         echo "Compiling for macOS..."
-        gcc -shared -fPIC claybind.c -o ../../libclay.dylib
+        cc -shared -fPIC claybind.c -o ../../libclay.dylib
         ;;
     *)
         echo "Unknown platform: $PLATFORM"
