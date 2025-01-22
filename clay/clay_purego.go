@@ -4,6 +4,7 @@ package clay
 
 import (
 	"fmt"
+	"log"
 	"unsafe"
 
 	"github.com/ebitengine/purego"
@@ -80,6 +81,7 @@ func init() {
 	} else {
 		dynamicErr = err
 	}
+	log.Println(dynamicErr)
 	if !dynamic {
 		return
 	}
