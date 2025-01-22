@@ -1,3 +1,7 @@
 *.dll
 *.so
 *.dylib
+*.json
+.cache
+.vscode
+build

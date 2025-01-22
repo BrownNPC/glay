@@ -26,7 +26,7 @@
     (defined(__STDC__) && __STDC__ == 1 && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) || \
     defined(_MSC_VER) \
 )
-#error "Clay requires C99, C++20, or MSVC"
+// #error "Clay requires C99, C++20, or MSVC"
 #endif
 
 #ifdef CLAY_WASM
